@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 076fc03c1459aec4db73d0e8479396b1, type: 3}
-  m_Name: New Card
+  m_Name: Diamond2
   m_EditorClassIdentifier: 
-  cardSuit: 0
-  cardName: 
-  cardValue: 0
-  cardSprite: {fileID: 0}
+  cardSuit: 2
+  cardName: Two of Diamonds
+  cardValue: 2
+  blackjackValue: 2
+  cardSprite: {fileID: 2800000, guid: 53c70a73c46a9314191c2fb20ca670f6, type: 3}
