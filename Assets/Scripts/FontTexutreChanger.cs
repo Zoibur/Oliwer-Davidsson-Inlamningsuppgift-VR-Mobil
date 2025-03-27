@@ -17,9 +17,9 @@ public class FontTexutreChanger : MonoBehaviour
             if (renderer != null)
             {
                 // Apply the materials to the MeshRenderer
-                Material[] materials = new Material[2];
+                Material[] materials = new Material[1];
                 materials[0] = frontMaterial;  
-                materials[1] = backMaterial;   
+                
                 renderer.materials = materials;
 
                

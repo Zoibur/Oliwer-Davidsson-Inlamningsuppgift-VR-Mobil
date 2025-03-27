@@ -1496,9 +1496,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2441099849704942560, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
+      propertyPath: textureData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7519d70e285925743a9fecbb24d3b7bf, type: 2}
     - target: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
       propertyPath: m_Name
       value: Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864836867300669144, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6152807988930386864, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
       propertyPath: m_Pivot.x
@@ -1566,7 +1574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6152807988930386864, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.084
       objectReference: {fileID: 0}
     - target: {fileID: 6152807988930386864, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
