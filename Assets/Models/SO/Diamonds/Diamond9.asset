@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076fc03c1459aec4db73d0e8479396b1, type: 3}
+  m_Name: Diamond9
+  m_EditorClassIdentifier: 
+  cardSuit: 0
+  cardName: Nine of Diamonds
+  cardValue: 9
+  blackjackValue: 9
+  cardSprite: {fileID: 2800000, guid: 990e7b66f6e6b8a44b645ccdc50c2b26, type: 3}

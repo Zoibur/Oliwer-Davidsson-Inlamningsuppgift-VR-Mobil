@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076fc03c1459aec4db73d0e8479396b1, type: 3}
+  m_Name: Heart10
+  m_EditorClassIdentifier: 
+  cardSuit: 0
+  cardName: Ten of Hearts
+  cardValue: 10
+  blackjackValue: 10
+  cardSprite: {fileID: 2800000, guid: 671561b2512c9624da64f3c857841831, type: 3}
