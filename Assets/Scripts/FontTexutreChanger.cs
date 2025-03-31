@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.U2D;
 using UnityEngine;
 
@@ -5,9 +6,16 @@ public class FontTexutreChanger : MonoBehaviour
 {
     public Card textureData;  
     public Material frontMaterial;  
-    public Material backMaterial;   
+      
 
     void Start()
+    {
+      // UpdateCardSprite();
+    }
+
+   
+
+    public void UpdateCardSprite()
     {
         if (textureData != null && textureData.cardSprite != null)
         {
@@ -18,12 +26,10 @@ public class FontTexutreChanger : MonoBehaviour
             {
                 // Apply the materials to the MeshRenderer
                 Material[] materials = new Material[1];
-                materials[0] = frontMaterial;  
-                
+                materials[0] = Instantiate(frontMaterial);  
                 renderer.materials = materials;
-
-               
-                frontMaterial.mainTexture = textureData.cardSprite;
+                
+                materials[0].mainTexture = textureData.cardSprite;
             }
             else
             {
@@ -33,12 +39,12 @@ public class FontTexutreChanger : MonoBehaviour
         else
         {
             Debug.LogWarning("TextureData or texture is missing.");
-        }
+        } 
     }
-    
-    
-    
-    
+
+
+
+
 }
     
  

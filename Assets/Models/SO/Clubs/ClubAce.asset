@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Ace of Clubs
   cardValue: 1
   blackjackValue: 1
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: b2a8a08eeb94bc74d9c76b7fd6ad7101, type: 3}

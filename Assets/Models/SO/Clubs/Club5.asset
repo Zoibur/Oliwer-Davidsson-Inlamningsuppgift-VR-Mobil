@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Five of Clubs
   cardValue: 5
   blackjackValue: 5
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: 9e585f360d7307d44aedce02bc60ae0e, type: 3}

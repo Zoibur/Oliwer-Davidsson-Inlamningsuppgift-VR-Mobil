@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Seven of Spades
   cardValue: 7
   blackjackValue: 7
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: e33fc0f49d21f3a42a74e6ca6a74b131, type: 3}

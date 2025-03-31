@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Eight of Hearts
   cardValue: 8
   blackjackValue: 8
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: d5f7d4e59d2cd4d4cb4aef715d974b0b, type: 3}

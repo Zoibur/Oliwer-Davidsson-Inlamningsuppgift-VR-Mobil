@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Six of Clubs
   cardValue: 6
   blackjackValue: 6
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: d15556ab4e2378149a5a4b26013e9fa5, type: 3}

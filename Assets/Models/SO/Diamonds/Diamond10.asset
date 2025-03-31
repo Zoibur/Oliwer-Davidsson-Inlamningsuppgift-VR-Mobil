@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Ten of Diamonds
   cardValue: 10
   blackjackValue: 10
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: 7b6cd07af0d208f49b848eac08efcf89, type: 3}

@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Seven of Diamonds
   cardValue: 7
   blackjackValue: 7
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: 5501832537db8fa40a29f84b2a3edaeb, type: 3}

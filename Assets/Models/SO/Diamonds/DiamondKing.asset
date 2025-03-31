@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: King of Diamonds
   cardValue: 10
   blackjackValue: 10
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: ece996862734a504895513584ddc3945, type: 3}

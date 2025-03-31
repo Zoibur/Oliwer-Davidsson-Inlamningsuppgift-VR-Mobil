@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Four of Clubs
   cardValue: 4
   blackjackValue: 4
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: 9491ec818c179574db0e2f109a8fe2ab, type: 3}

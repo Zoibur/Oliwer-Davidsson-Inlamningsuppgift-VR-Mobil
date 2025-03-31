@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Ace of Spades
   cardValue: 1
   blackjackValue: 1
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: b8bb81b2eabb5114bab83e4c424ffc10, type: 3}

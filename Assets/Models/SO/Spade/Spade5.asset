@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Five of Spades
   cardValue: 5
   blackjackValue: 5
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: a7972de46fae1204cb757e839edbfb8f, type: 3}

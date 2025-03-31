@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Nine of Diamonds
   cardValue: 9
   blackjackValue: 9
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: 990e7b66f6e6b8a44b645ccdc50c2b26, type: 3}

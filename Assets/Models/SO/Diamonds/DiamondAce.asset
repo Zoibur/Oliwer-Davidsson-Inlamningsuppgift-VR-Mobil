@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Ace of Diamonds
   cardValue: 1
   blackjackValue: 1
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: b6ae41545216f6e4c9ac88e9aa902f8f, type: 3}

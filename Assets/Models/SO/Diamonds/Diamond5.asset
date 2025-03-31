@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Five of Diamonds
   cardValue: 5
   blackjackValue: 5
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: 193e7f4866b0ce64da34d830708c674d, type: 3}

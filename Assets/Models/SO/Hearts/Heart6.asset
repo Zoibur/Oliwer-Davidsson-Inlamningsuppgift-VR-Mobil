@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Six of Hearts
   cardValue: 6
   blackjackValue: 6
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: c04dae7d7b88a484e9edb64f0ea295ee, type: 3}

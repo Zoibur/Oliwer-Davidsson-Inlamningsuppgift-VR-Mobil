@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Nine of Spades
   cardValue: 9
   blackjackValue: 9
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: ac5b8cfc2ff7bc54988acaf18484687d, type: 3}

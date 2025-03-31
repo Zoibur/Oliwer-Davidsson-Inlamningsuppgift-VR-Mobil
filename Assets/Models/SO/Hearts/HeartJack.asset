@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Jack of Hearts
   cardValue: 10
   blackjackValue: 10
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: cb801d9e259ac634caaa92f6813cbc5b, type: 3}

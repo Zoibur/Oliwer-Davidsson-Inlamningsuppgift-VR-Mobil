@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Two of Clubs
   cardValue: 2
   blackjackValue: 2
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: ae89ab7b6701c934788e7ae5c7423063, type: 3}

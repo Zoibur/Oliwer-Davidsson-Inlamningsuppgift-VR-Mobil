@@ -16,4 +16,5 @@ MonoBehaviour:
   cardName: Ace of Hearts
   cardValue: 1
   blackjackValue: 1
+  cardPrefab: {fileID: 2548244835395657122, guid: 89be929c43e09b54e9db2683b0e1dffc, type: 3}
   cardSprite: {fileID: 2800000, guid: d9ae7196daae66e47b6e1749b72e10b8, type: 3}
