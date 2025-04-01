@@ -10,7 +10,6 @@ public class Card : ScriptableObject
    public string cardName;
    public int cardValue;
    public int blackjackValue; 
-   public GameObject cardPrefab;
    public Texture2D cardSprite;
    
 }

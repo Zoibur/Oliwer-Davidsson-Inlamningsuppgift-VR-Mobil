@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class DeckManager : MonoBehaviour
 {
     public List<Card> deck = new List<Card>();  
-    public List<Card> playerHand = new List<Card>(); 
-    public List<Card> dealerHand = new List<Card>();
+    public List<CardView> playerHand = new List<CardView>(); 
+    public List<CardView> dealerHand = new List<CardView>();
     private bool isPlayerTurn = true;
     public Transform playerHandTransform; // Where the player's cards will be placed (in 3D space)
     public Transform dealerHandTransform; // Where the dealer's cards will be placed (in 3D space)
     public GameObject cardPrefab;
-    
+    public CardDataBase cardDatabase;
 
     private float offset = 0.2f;
     
@@ -24,10 +25,8 @@ public class DeckManager : MonoBehaviour
     void Start()
     {
         InitializeDeck();
-        ShuffleDeck();
-        
-        
     }
+    
     void Update()
     {
         // Check for player actions if it's their turn
@@ -37,13 +36,12 @@ public class DeckManager : MonoBehaviour
             
             DestroyAllCards();
             InitializeDeck();
-            ShuffleDeck();
             
         }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartGame();
+            StartCoroutine(StartGame());
             isPlayerTurn = true;
         }
         
@@ -61,6 +59,14 @@ public class DeckManager : MonoBehaviour
         }
     }
 
+    private Card GetRandomCardFromDeck()
+    {
+        var cardIndex = Random.Range(0, deck.Count);
+        var card = deck[cardIndex];
+        deck.RemoveAt(cardIndex);
+        return card;
+    }
+
     public void DestroyAllCards()
     {
         GameObject[] allObjects = GameObject.FindGameObjectsWithTag("Card");
@@ -74,110 +80,87 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    private void SpawnCard(Card card, Vector3 spawnPosition, bool isPlayer, bool isFlipped)
+    private bool SpawnCard(Card cardData, Vector3 spawnPosition, bool isPlayer, out CardView cardView)
     {
-        if (card != null && card.cardPrefab != null)
+        cardView = null;
+        if (cardData != null  )
         {
-            
-            Quaternion roation = isPlayer ? Quaternion.Euler(90, 0, 0) : isFlipped? Quaternion.Euler(90,0, 0):Quaternion.Euler(-90,0,0);
-            
-            GameObject cardObject = Instantiate(card.cardPrefab, spawnPosition, roation);
-            
-            FontTexutreChanger front = cardObject.GetComponent<FontTexutreChanger>();
+            Quaternion rotation = isPlayer ? Quaternion.Euler(0,0, 0):Quaternion.Euler(0,0,180);
+            cardView = Instantiate(cardDatabase.cardViewPrefab);
+            cardView.transform.position = spawnPosition;
+            cardView.transform.rotation = rotation;
+            cardView.SetCardData(cardData);
 
-            if (front != null)
-            {
-                front.textureData = card; 
-                front.UpdateCardSprite();
-            }
+            return true;
         }
+
+        return false;
     }
     
     void InitializeDeck()
     {
-        deck.Clear();
-        foreach (var card in allCards)
-        {
-            deck.Add(card);
-        }
-        
+        deck = new List<Card>(cardDatabase.cards);
         currentCardPosition = playerHandTransform.position;
-        
         currentCardPositionDealer = dealerHandTransform.position;
     }
-    void ShuffleDeck()
-    {
-        for (int i = 0; i < deck.Count; i++)
-        {
-            Card temp = deck[i];
-            int randomIndex = Random.Range(i, deck.Count);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
-        }
-    }
-
-   
-    public Card DealCard(bool isPlayer)
+    
+    private void DealCard(bool isPlayer, List<CardView> hand)
     {
         if (deck.Count == 0) InitializeDeck(); // If the deck is empty, reset it
-        Card dealtCard = deck[0];
-        deck.RemoveAt(0);
+        Card dealtCard = GetRandomCardFromDeck();
         
-
         if (isPlayer)
         {
-            
-            SpawnCard(dealtCard, currentCardPosition,true,false);
+            if (SpawnCard(dealtCard, currentCardPosition, true, out var cardView))
+            {
+                hand.Add(cardView);
+            }
             currentCardPosition.x += offset;
         }
         else
         {
             if (dealerHand.Count == 1)
             {
-                SpawnCard(dealtCard, currentCardPositionDealer, false,false);
-              
+                if(SpawnCard(dealtCard, currentCardPositionDealer, false, out var cardView))
+                {
+                    hand.Add(cardView);
+                };
             }
             else
             {
-                SpawnCard(dealtCard, currentCardPositionDealer, true,false);
+                if (SpawnCard(dealtCard, currentCardPositionDealer, true, out var cardView))
+                {
+                    hand.Add(cardView);
+                }
                
             }
             currentCardPositionDealer.x += offset;
-            
         }
-        
-        return dealtCard;
     }
-    public void StartGame()
+    
+    public IEnumerator StartGame()
     {
         playerHand.Clear();
         dealerHand.Clear();
-
-        // Deal two cards to the player and dealer
-       playerHand.Add(DealCard(true));
-       
-       
-       dealerHand.Add(DealCard(false));
-      
-
-       playerHand.Add(DealCard(true));
-      
-       
-       dealerHand.Add(DealCard(false));
-      
-       
-
+        
+        DealCard(true,playerHand);
+        yield return new WaitForSeconds(1.0f);
+        DealCard(false,dealerHand);
+        yield return new WaitForSeconds(1.0f);
+        DealCard(true,playerHand);
+        yield return new WaitForSeconds(1.0f);
+        DealCard(false,dealerHand);
     }
     
-    public int CalculateHandValue(List<Card> hand)
+    public int CalculateHandValue(List<CardView> hand)
     {
         int value = 0;
         int aceCount = 0;
 
         foreach (var card in hand)
         {
-            value += card.blackjackValue;
-            if (card.cardValue == 1) aceCount++; // If the card is an Ace
+            value += card.CardData.blackjackValue;
+            if (card.CardData.cardValue == 1) aceCount++; // If the card is an Ace
         }
 
         // Adjust for Aces (they can be worth 1 or 11)
@@ -194,9 +177,8 @@ public class DeckManager : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            Card drawnCard = DealCard(true);
-            Debug.Log(drawnCard + "Player");
-            playerHand.Add(drawnCard);
+            DealCard(true, playerHand);
+            // playerHand.Add(drawnCard);
             
             // Check if the player has busted (hand value > 21)
             int playerHandValue = CalculateHandValue(playerHand);
@@ -213,23 +195,33 @@ public class DeckManager : MonoBehaviour
     {
         isPlayerTurn = false;
         StartCoroutine(DealerTurn()); // Start dealer's turn after the player stands
-        
-       
     }
     
     IEnumerator DealerTurn()
     {
+        var cardInstance = dealerHand[^1];
+        var continueCoroutine = false;
+        
+        Sequence flipSequence = DOTween.Sequence();
+        var cardInstanceStartPos = cardInstance.transform.position;
+        flipSequence.Append(cardInstance.transform.DOMoveY(cardInstanceStartPos.y + 0.25f, 0.5f))
+            .Append(cardInstance.transform.DORotate(new Vector3(0, 0, 180), 0.5f, RotateMode.LocalAxisAdd))
+            .Append(cardInstance.transform.DOMoveY(cardInstanceStartPos.y, 0.5f)).OnComplete(() =>
+            {
+                continueCoroutine = true;
+            });
+        
+        // cardInstance.transform.DORotate(new Vector3(0, 0, 180), 1f,RotateMode.WorldAxisAdd).OnComplete(() =>
+        // {
+        //     continueCoroutine = true;
+        // });
+        yield return new WaitUntil(() => continueCoroutine);
+        
         while (CalculateHandValue(dealerHand) < 17)
         {
-            Card drawnCard = DealCard(false);
-            dealerHand.Add(drawnCard);
-            
-            
-            Debug.Log(drawnCard + "Dealer");
-            // Optionally, display the new card in the dealer's hand
-            //UpdateHandValueDisplay();
+            DealCard(false, dealerHand);
+          
             yield return new WaitForSeconds(1); // Delay to simulate the dealer drawing cards
-            
         }
 
         // Now determine the outcome of the game
