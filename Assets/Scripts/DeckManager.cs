@@ -11,11 +11,13 @@ public class DeckManager : MonoBehaviour
     public Transform playerHandTransform; // Where the player's cards will be placed (in 3D space)
     public Transform dealerHandTransform; // Where the dealer's cards will be placed (in 3D space)
     public GameObject cardPrefab;
+    
 
-    public float offset = 0.8f;
+    private float offset = 0.2f;
     
     private Vector3 currentCardPosition;
     private Vector3 currentCardPositionDealer;
+    
     
     public Card[] allCards; 
     
@@ -23,11 +25,29 @@ public class DeckManager : MonoBehaviour
     {
         InitializeDeck();
         ShuffleDeck();
-        StartGame();
+        
+        
     }
     void Update()
     {
         // Check for player actions if it's their turn
+        
+        if (Input.GetKeyDown(KeyCode.R)) // Hit
+        {
+            
+            DestroyAllCards();
+            InitializeDeck();
+            ShuffleDeck();
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            StartGame();
+            isPlayerTurn = true;
+        }
+        
+        
         if (isPlayerTurn)
         {
             if (Input.GetKeyDown(KeyCode.H)) // Hit
@@ -41,12 +61,25 @@ public class DeckManager : MonoBehaviour
         }
     }
 
-    private void SpawnCard(Card card, Vector3 spawnPosition, bool isPlayer)
+    public void DestroyAllCards()
+    {
+        GameObject[] allObjects = GameObject.FindGameObjectsWithTag("Card");
+
+        foreach (GameObject obj in allObjects)
+        {
+            if(obj.tag == "Card")
+            {
+                Destroy(obj);
+            }
+        }
+    }
+
+    private void SpawnCard(Card card, Vector3 spawnPosition, bool isPlayer, bool isFlipped)
     {
         if (card != null && card.cardPrefab != null)
         {
             
-            Quaternion roation = Quaternion.Euler(90, 0, 0);
+            Quaternion roation = isPlayer ? Quaternion.Euler(90, 0, 0) : isFlipped? Quaternion.Euler(90,0, 0):Quaternion.Euler(-90,0,0);
             
             GameObject cardObject = Instantiate(card.cardPrefab, spawnPosition, roation);
             
@@ -69,6 +102,7 @@ public class DeckManager : MonoBehaviour
         }
         
         currentCardPosition = playerHandTransform.position;
+        
         currentCardPositionDealer = dealerHandTransform.position;
     }
     void ShuffleDeck()
@@ -81,21 +115,35 @@ public class DeckManager : MonoBehaviour
             deck[randomIndex] = temp;
         }
     }
+
+   
     public Card DealCard(bool isPlayer)
     {
         if (deck.Count == 0) InitializeDeck(); // If the deck is empty, reset it
         Card dealtCard = deck[0];
         deck.RemoveAt(0);
+        
 
         if (isPlayer)
         {
-            SpawnCard(dealtCard, currentCardPosition, true);
+            
+            SpawnCard(dealtCard, currentCardPosition,true,false);
             currentCardPosition.x += offset;
         }
         else
         {
-            SpawnCard(dealtCard, currentCardPositionDealer, false);
+            if (dealerHand.Count == 1)
+            {
+                SpawnCard(dealtCard, currentCardPositionDealer, false,false);
+              
+            }
+            else
+            {
+                SpawnCard(dealtCard, currentCardPositionDealer, true,false);
+               
+            }
             currentCardPositionDealer.x += offset;
+            
         }
         
         return dealtCard;
@@ -110,13 +158,13 @@ public class DeckManager : MonoBehaviour
        
        
        dealerHand.Add(DealCard(false));
-       
+      
 
        playerHand.Add(DealCard(true));
-       
+      
        
        dealerHand.Add(DealCard(false));
-       
+      
        
 
     }
@@ -150,8 +198,6 @@ public class DeckManager : MonoBehaviour
             Debug.Log(drawnCard + "Player");
             playerHand.Add(drawnCard);
             
-           
-
             // Check if the player has busted (hand value > 21)
             int playerHandValue = CalculateHandValue(playerHand);
             if (playerHandValue > 21)
@@ -167,6 +213,7 @@ public class DeckManager : MonoBehaviour
     {
         isPlayerTurn = false;
         StartCoroutine(DealerTurn()); // Start dealer's turn after the player stands
+        
        
     }
     
@@ -182,6 +229,7 @@ public class DeckManager : MonoBehaviour
             // Optionally, display the new card in the dealer's hand
             //UpdateHandValueDisplay();
             yield return new WaitForSeconds(1); // Delay to simulate the dealer drawing cards
+            
         }
 
         // Now determine the outcome of the game
@@ -206,7 +254,7 @@ public class DeckManager : MonoBehaviour
             Debug.Log("It's a Draw!");
         }
 
-        // Optionally reset the game or start a new round after a delay
+       
     }
     
     void EndTurn()

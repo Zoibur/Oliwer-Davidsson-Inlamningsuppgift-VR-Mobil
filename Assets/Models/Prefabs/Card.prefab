@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2441099849704942560}
   m_Layer: 0
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,4 +242,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textureData: {fileID: 11400000, guid: 4582e2b2d704abe40ac2cbe924f53728, type: 2}
   frontMaterial: {fileID: 2100000, guid: db6aefa154cf7fa4ea4cdc689c96f720, type: 2}
-  backMaterial: {fileID: 2100000, guid: f830073bcb346fb45b809bfab6f68a93, type: 2}
