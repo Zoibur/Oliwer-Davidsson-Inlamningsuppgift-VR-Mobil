@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DeckManager : MonoBehaviour
 {
@@ -13,6 +15,8 @@ public class DeckManager : MonoBehaviour
     public Transform dealerHandTransform; // Where the dealer's cards will be placed (in 3D space)
     public GameObject cardPrefab;
     public CardDataBase cardDatabase;
+    public Animator animator;
+    public TextMeshProUGUI resultText;
 
     private float offset = 0.2f;
     
@@ -56,6 +60,27 @@ public class DeckManager : MonoBehaviour
             {
                 PlayerStand();
             }
+        }
+    }
+
+    public void StartRound()
+    {
+        StartCoroutine(StartGame());
+        isPlayerTurn = true;
+    }
+
+    public void PlayerTurnHit()
+    {
+        if (isPlayerTurn)
+        { 
+            PlayerHit();
+        }
+    }
+    public void PlayerTurnStand()
+    {
+        if (isPlayerTurn)
+        {
+            PlayerStand();
         }
     }
 
@@ -143,12 +168,15 @@ public class DeckManager : MonoBehaviour
         playerHand.Clear();
         dealerHand.Clear();
         
+        animator.SetTrigger("Deal");
+        yield return new WaitForSeconds(2.5f);
+
         DealCard(true,playerHand);
         yield return new WaitForSeconds(1.0f);
         DealCard(false,dealerHand);
         yield return new WaitForSeconds(1.0f);
         DealCard(true,playerHand);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.8f);
         DealCard(false,dealerHand);
     }
     
@@ -199,6 +227,7 @@ public class DeckManager : MonoBehaviour
     
     IEnumerator DealerTurn()
     {
+        animator.SetTrigger("Show");
         var cardInstance = dealerHand[^1];
         var continueCoroutine = false;
         
@@ -231,26 +260,32 @@ public class DeckManager : MonoBehaviour
         // Check the outcome
         if (dealerHandValue > 21)
         {
+            resultText.text = "Dealer Busted! You Win!";
             Debug.Log("Dealer Busted! Player Wins!");
         }
         else if (dealerHandValue > playerHandValue)
         {
+            resultText.text = "Dealer Wins!";
             Debug.Log("Dealer Wins!");
         }
         else if (dealerHandValue < playerHandValue)
         {
+            resultText.text = "You Wins!";
             Debug.Log("Player Wins!");
         }
         else
         {
+            resultText.text = "Its a Draw, You Lose!";
             Debug.Log("It's a Draw!");
         }
 
        
     }
     
-    void EndTurn()
+    public void EndTurn()
     {
-        // Optionally, do something after the player's turn ends (e.g., show a message or reset state)
+        DestroyAllCards();
+        InitializeDeck();
+        resultText.text = "";
     }
 }
