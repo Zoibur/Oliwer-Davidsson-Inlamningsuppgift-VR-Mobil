@@ -11,6 +11,7 @@ public class SymbolScoreData
 {
     public Spinning.wheelIcons icon;
     public int score;
+   
 }
 
 public class SlotMachine : MonoBehaviour
@@ -18,6 +19,11 @@ public class SlotMachine : MonoBehaviour
     [SerializeField] private List<Spinning> slotWheels;
     [SerializeField] private float runningTime;
     [SerializeField] private List<SymbolScoreData> scoreDatas;
+
+    public GameObject lever;
+    private float leverZangle;
+    public PointSystem pointSystem;
+    public int requiredPoints = 50;
 
     [Range(0, 100)] public float chanceOfSameSymbol;
 
@@ -38,6 +44,16 @@ public class SlotMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        leverZangle =  lever.transform.localEulerAngles.z;
+
+        if (leverZangle >= 70 && state == SlotMachineState.Idle &&  pointSystem.HasEnoughtPoints(requiredPoints))
+        {
+            state = SlotMachineState.Spinning;
+            StartCoroutine(StartSpinningCoroutine());
+            pointSystem.SubtractPoints(requiredPoints);
+        }
+       
         if (Input.GetKeyDown(KeyCode.Space) && state == SlotMachineState.Idle)
         {
             state = SlotMachineState.Spinning;
@@ -80,6 +96,9 @@ public class SlotMachine : MonoBehaviour
         if (sameSymbol > -1)
         {
             var symbol = (wheelIcons)sameSymbol;
+            
+            pointSystem.AddPoints(GetScoreForSymbol(symbol)); //added 
+            
             Debug.LogError($"WOOOOOOOOOON WITH SYMBOL {symbol} REWARDING {GetScoreForSymbol(symbol)}");
         }
 

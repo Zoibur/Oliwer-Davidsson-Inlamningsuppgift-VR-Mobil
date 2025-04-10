@@ -17,6 +17,8 @@ public class DeckManager : MonoBehaviour
     public CardDataBase cardDatabase;
     public Animator animator;
     public TextMeshProUGUI resultText;
+    
+    
 
     private float offset = 0.2f;
     
