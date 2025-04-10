@@ -35,32 +35,32 @@ public class DeckManager : MonoBehaviour
     {
         // Check for player actions if it's their turn
         
-        if (Input.GetKeyDown(KeyCode.R)) // Hit
-        {
-            
-            DestroyAllCards();
-            InitializeDeck();
-            
-        }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            StartCoroutine(StartGame());
-            isPlayerTurn = true;
-        }
-        
-        
-        if (isPlayerTurn)
-        {
-            if (Input.GetKeyDown(KeyCode.H)) // Hit
-            {
-                PlayerHit();
-            }
-            if (Input.GetKeyDown(KeyCode.S)) // Stand
-            {
-                PlayerStand();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.R)) // Hit
+        // {
+        //     
+        //     DestroyAllCards();
+        //     InitializeDeck();
+        //     
+        // }
+        //
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     StartCoroutine(StartGame());
+        //     isPlayerTurn = true;
+        // }
+        //
+        //
+        // if (isPlayerTurn)
+        // {
+        //     if (Input.GetKeyDown(KeyCode.H)) // Hit
+        //     {
+        //         PlayerHit();
+        //     }
+        //     if (Input.GetKeyDown(KeyCode.S)) // Stand
+        //     {
+        //         PlayerStand();
+        //     }
+        // }
     }
 
     public void StartRound()
@@ -287,5 +287,6 @@ public class DeckManager : MonoBehaviour
         DestroyAllCards();
         InitializeDeck();
         resultText.text = "";
+        isPlayerTurn = false;
     }
 }
