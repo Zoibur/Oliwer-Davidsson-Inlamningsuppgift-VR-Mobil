@@ -5,67 +5,56 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class LeverPull : MonoBehaviour
 {
-   public XRGrabInteractable grabInteractable; // Reference to the XRGrabInteractable component
-    private Quaternion initialRotation; // Initial rotation of the lever
-    private float lastRotationZ; // The last known Z rotation
-    private float currentRotationZ; // The current Z rotation
+    public Transform leverBase; // Pivot point
+    public float torqueMultiplier = 50f;
 
-    public float minRotationZ = 0f; // Minimum Z rotation (0 degrees)
-    public float maxRotationZ = 90f; // Maximum Z rotation (90 degrees)
+    private XRGrabInteractable grab;
+    private Rigidbody rb;
+    private Transform interactorTransform;
+  
 
-    private void Start()
+    void Awake()
     {
-        // Store the initial rotation of the lever
-        initialRotation = transform.rotation;
+        rb = GetComponent<Rigidbody>();
+        grab = GetComponent<XRGrabInteractable>();
 
-        // Optionally, get the XRGrabInteractable if not set in inspector
-        if (grabInteractable == null)
-            grabInteractable = GetComponent<XRGrabInteractable>();
+        grab.trackRotation = false; // Important: disable default rotation tracking
+        grab.selectEntered.AddListener(OnGrab);
+        grab.selectExited.AddListener(OnRelease);
+    }
 
+    void OnGrab(SelectEnterEventArgs args)
+    {
+        interactorTransform = args.interactorObject.transform;
+        
+        
+        
+    }
+
+    void OnRelease(SelectExitEventArgs args)
+    {
+        interactorTransform = null;
+        rb.angularVelocity = Vector3.zero; // Optional: stop spinning
        
     }
 
-    private void OnGrabStarted(XRBaseInteractor interactor)
+    void FixedUpdate()
     {
-        // Store the initial Z rotation when the lever is grabbed
-        lastRotationZ = transform.rotation.eulerAngles.z;
-    }
-
-    private void OnGrabExited(XRBaseInteractor interactor)
-    {
-        // Optionally, reset the lever when released (this can be adjusted based on your needs)
-        transform.rotation = initialRotation;
-    }
-
-    private void Update()
-    {
-        if (grabInteractable.isSelected)
+        if (interactorTransform != null)
         {
-            // Calculate the difference in rotation along the Z-axis
-            float deltaRotationZ = transform.rotation.eulerAngles.z - lastRotationZ;
+            Vector3 localDirection = leverBase.InverseTransformPoint(interactorTransform.position) - leverBase.InverseTransformPoint(transform.position);
+            float targetAngle = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;
 
-            // Update the current rotation, but only allow movement along the Z-axis
-            currentRotationZ = transform.rotation.eulerAngles.z;
+            // Get current local Z rotation
+            float currentZ = transform.localEulerAngles.z;
+            if (currentZ > 180f) currentZ -= 360f;
 
-            // Constrain the rotation to the range of 0 to 90 degrees
-            currentRotationZ = Mathf.Clamp(currentRotationZ, minRotationZ, maxRotationZ);
+            // Calculate angle difference
+            float angleDiff = Mathf.DeltaAngle(currentZ, targetAngle);
+            float torque = angleDiff * torqueMultiplier;
 
-            // Apply the constrained rotation
-            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, currentRotationZ);
-
-            // Update the last rotation for the next frame
-            lastRotationZ = transform.rotation.eulerAngles.z;
+            // Apply torque around Z
+            rb.AddRelativeTorque(new Vector3(0f, 0f, torque));
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

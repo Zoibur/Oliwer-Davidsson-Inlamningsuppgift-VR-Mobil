@@ -99,7 +99,7 @@ public class SlotMachine : MonoBehaviour
             
             pointSystem.AddPoints(GetScoreForSymbol(symbol)); //added 
             
-            Debug.LogError($"WOOOOOOOOOON WITH SYMBOL {symbol} REWARDING {GetScoreForSymbol(symbol)}");
+            Debug.Log($"WOOOOOOOOOON WITH SYMBOL {symbol} REWARDING {GetScoreForSymbol(symbol)}");
         }
 
         yield return new WaitForSeconds(2.0f);
