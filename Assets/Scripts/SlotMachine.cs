@@ -24,6 +24,10 @@ public class SlotMachine : MonoBehaviour
     private float leverZangle;
     public PointSystem pointSystem;
     public int requiredPoints = 50;
+    public AudioSource SpinSound;
+    public AudioSource StopSound;
+    public AudioSource WinSound;
+    public AudioSource LoseSound;
 
     [Range(0, 100)] public float chanceOfSameSymbol;
 
@@ -49,6 +53,7 @@ public class SlotMachine : MonoBehaviour
 
         if (leverZangle >= 70 && state == SlotMachineState.Idle &&  pointSystem.HasEnoughtPoints(requiredPoints))
         {
+            
             state = SlotMachineState.Spinning;
             StartCoroutine(StartSpinningCoroutine());
             pointSystem.SubtractPoints(requiredPoints);
@@ -65,6 +70,7 @@ public class SlotMachine : MonoBehaviour
     {
         for (int i = 0; i < slotWheels.Count; i++)
         {
+            SpinSound.Play();
             var slotWheel = slotWheels[i];
             slotWheel.StartSpinning();
             yield return new WaitForSeconds(0.1f);
@@ -90,20 +96,28 @@ public class SlotMachine : MonoBehaviour
         {
             var slotWheel = slotWheels[i];
             slotWheel.StopSpinning(sameSymbol > -1 ? sameSymbol : Random.Range(0, 8));
+            StopSound.Play();
             yield return new WaitForSeconds(0.5f);
         }
-
+        SpinSound.Stop();
         if (sameSymbol > -1)
         {
             var symbol = (wheelIcons)sameSymbol;
             
             pointSystem.AddPoints(GetScoreForSymbol(symbol)); //added 
-            
+           
+            WinSound.Play();
             Debug.Log($"WOOOOOOOOOON WITH SYMBOL {symbol} REWARDING {GetScoreForSymbol(symbol)}");
+        }
+        else
+        {
+            LoseSound.Play();
         }
 
         yield return new WaitForSeconds(2.0f);
         state = SlotMachineState.Idle;
+        
+       
     }
 
     private int GetScoreForSymbol(wheelIcons icon)

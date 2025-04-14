@@ -17,7 +17,10 @@ public class DeckManager : MonoBehaviour
     public CardDataBase cardDatabase;
     public Animator animator;
     public TextMeshProUGUI resultText;
-    
+    public AudioSource CardSource;
+    public AudioSource Card2Sound;
+    public AudioSource WinSound;
+    public AudioSource LoseSound;
     
 
     private float offset = 0.2f;
@@ -37,32 +40,30 @@ public class DeckManager : MonoBehaviour
     {
         // Check for player actions if it's their turn
         
-        // if (Input.GetKeyDown(KeyCode.R)) // Hit
-        // {
-        //     
-        //     DestroyAllCards();
-        //     InitializeDeck();
-        //     
-        // }
-        //
-        // if (Input.GetKeyDown(KeyCode.P))
-        // {
-        //     StartCoroutine(StartGame());
-        //     isPlayerTurn = true;
-        // }
-        //
-        //
-        // if (isPlayerTurn)
-        // {
-        //     if (Input.GetKeyDown(KeyCode.H)) // Hit
-        //     {
-        //         PlayerHit();
-        //     }
-        //     if (Input.GetKeyDown(KeyCode.S)) // Stand
-        //     {
-        //         PlayerStand();
-        //     }
-        // }
+        if (Input.GetKeyDown(KeyCode.R)) // Hit
+        {
+            
+           EndTurn();
+            
+        }
+        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+           StartRound();
+        }
+        
+        
+        if (isPlayerTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.H)) // Hit
+            {
+                PlayerHit();
+            }
+            if (Input.GetKeyDown(KeyCode.S)) // Stand
+            {
+                PlayerStand();
+            }
+        }
     }
 
     public void StartRound()
@@ -76,6 +77,7 @@ public class DeckManager : MonoBehaviour
         if (isPlayerTurn)
         { 
             PlayerHit();
+            CardSource.Play();
         }
     }
     public void PlayerTurnStand()
@@ -83,6 +85,7 @@ public class DeckManager : MonoBehaviour
         if (isPlayerTurn)
         {
             PlayerStand();
+            CardSource.Play();
         }
     }
 
@@ -172,13 +175,16 @@ public class DeckManager : MonoBehaviour
         
         animator.SetTrigger("Deal");
         yield return new WaitForSeconds(2.5f);
-
+        CardSource.Play();
         DealCard(true,playerHand);
         yield return new WaitForSeconds(1.0f);
+        CardSource.Play();
         DealCard(false,dealerHand);
         yield return new WaitForSeconds(1.0f);
+        CardSource.Play();
         DealCard(true,playerHand);
         yield return new WaitForSeconds(0.8f);
+        CardSource.Play();
         DealCard(false,dealerHand);
     }
     
@@ -215,8 +221,11 @@ public class DeckManager : MonoBehaviour
             if (playerHandValue > 21)
             {
                 Debug.Log("Player Busted!");
+                resultText.text = "Player Busted!";
+                
+                LoseSound.Play();
                 isPlayerTurn = false;
-                EndTurn(); // End player's turn if busted
+               
             }
         }
     }
@@ -264,21 +273,25 @@ public class DeckManager : MonoBehaviour
         {
             resultText.text = "Dealer Busted! You Win!";
             Debug.Log("Dealer Busted! Player Wins!");
+            WinSound.Play();
         }
         else if (dealerHandValue > playerHandValue)
         {
             resultText.text = "Dealer Wins!";
             Debug.Log("Dealer Wins!");
+            LoseSound.Play();
         }
         else if (dealerHandValue < playerHandValue)
         {
             resultText.text = "You Wins!";
             Debug.Log("Player Wins!");
+            WinSound.Play();
         }
         else
         {
             resultText.text = "Its a Draw, You Lose!";
             Debug.Log("It's a Draw!");
+            LoseSound.Play();
         }
 
        
