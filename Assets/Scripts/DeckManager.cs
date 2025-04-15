@@ -21,6 +21,13 @@ public class DeckManager : MonoBehaviour
     public AudioSource Card2Sound;
     public AudioSource WinSound;
     public AudioSource LoseSound;
+    public PointSystem pointSystem;
+    public int requiredPoints = 50;
+
+    public GameObject playButton;
+    public GameObject hitButton;
+    public GameObject stayButton;
+    public GameObject resetButton;
     
 
     private float offset = 0.2f;
@@ -57,19 +64,28 @@ public class DeckManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.H)) // Hit
             {
-                PlayerHit();
+                PlayerTurnHit();
             }
             if (Input.GetKeyDown(KeyCode.S)) // Stand
             {
-                PlayerStand();
+                PlayerTurnStand();
             }
         }
     }
 
     public void StartRound()
     {
-        StartCoroutine(StartGame());
-        isPlayerTurn = true;
+        if (pointSystem.HasEnoughtPoints(requiredPoints))
+        {
+            playButton.SetActive(false);
+            pointSystem.SubtractPoints(requiredPoints);
+            StartCoroutine(StartGame());
+            isPlayerTurn = true;
+        }
+        else
+        {
+            Debug.Log("You need enough points");
+        }
     }
 
     public void PlayerTurnHit()
@@ -85,7 +101,10 @@ public class DeckManager : MonoBehaviour
         if (isPlayerTurn)
         {
             PlayerStand();
-            CardSource.Play();
+            Card2Sound.Play();
+            
+            hitButton.SetActive(false);
+            stayButton.SetActive(false);
         }
     }
 
@@ -186,6 +205,9 @@ public class DeckManager : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         CardSource.Play();
         DealCard(false,dealerHand);
+        
+        hitButton.SetActive(true);
+        stayButton.SetActive(true);
     }
     
     public int CalculateHandValue(List<CardView> hand)
@@ -222,6 +244,9 @@ public class DeckManager : MonoBehaviour
             {
                 Debug.Log("Player Busted!");
                 resultText.text = "Player Busted!";
+                hitButton.SetActive(false);
+                stayButton.SetActive(false);
+                resetButton.SetActive(true);
                 
                 LoseSound.Play();
                 isPlayerTurn = false;
@@ -235,13 +260,13 @@ public class DeckManager : MonoBehaviour
         isPlayerTurn = false;
         StartCoroutine(DealerTurn()); // Start dealer's turn after the player stands
     }
-    
+
     IEnumerator DealerTurn()
     {
         animator.SetTrigger("Show");
         var cardInstance = dealerHand[^1];
         var continueCoroutine = false;
-        
+
         Sequence flipSequence = DOTween.Sequence();
         var cardInstanceStartPos = cardInstance.transform.position;
         flipSequence.Append(cardInstance.transform.DOMoveY(cardInstanceStartPos.y + 0.25f, 0.5f))
@@ -250,17 +275,17 @@ public class DeckManager : MonoBehaviour
             {
                 continueCoroutine = true;
             });
-        
+
         // cardInstance.transform.DORotate(new Vector3(0, 0, 180), 1f,RotateMode.WorldAxisAdd).OnComplete(() =>
         // {
         //     continueCoroutine = true;
         // });
         yield return new WaitUntil(() => continueCoroutine);
-        
+
         while (CalculateHandValue(dealerHand) < 17)
         {
             DealCard(false, dealerHand);
-          
+
             yield return new WaitForSeconds(1); // Delay to simulate the dealer drawing cards
         }
 
@@ -274,31 +299,42 @@ public class DeckManager : MonoBehaviour
             resultText.text = "Dealer Busted! You Win!";
             Debug.Log("Dealer Busted! Player Wins!");
             WinSound.Play();
+            pointSystem.AddPoints(150);
+            resetButton.SetActive(true);
+            
+            
         }
         else if (dealerHandValue > playerHandValue)
         {
             resultText.text = "Dealer Wins!";
             Debug.Log("Dealer Wins!");
             LoseSound.Play();
+            resetButton.SetActive(true);
         }
         else if (dealerHandValue < playerHandValue)
         {
             resultText.text = "You Wins!";
             Debug.Log("Player Wins!");
+            pointSystem.AddPoints(150);
             WinSound.Play();
+            resetButton.SetActive(true);
         }
         else
         {
             resultText.text = "Its a Draw, You Lose!";
             Debug.Log("It's a Draw!");
             LoseSound.Play();
+            resetButton.SetActive(true);
+
+
         }
 
        
     }
-    
     public void EndTurn()
     {
+        resetButton.SetActive(false);
+        playButton.SetActive(true);
         DestroyAllCards();
         InitializeDeck();
         resultText.text = "";
