@@ -7764,7 +7764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpsText: {fileID: 620694079}
   updateInterval: 1
-  framesToAverage: 10
+  framesToAverage: 40
 --- !u!65 &438800306
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainCasino.unity
     guid: 42b57f49d5e01a6409c6eb73916d0729
   m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e63b8fcfe7cc6ce4f919ba7630d3bf2c, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7d9b122ceb8dac448b9240d94257ff34, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 6734d866614b5cd41838bc3ce4a5688e, type: 2}
