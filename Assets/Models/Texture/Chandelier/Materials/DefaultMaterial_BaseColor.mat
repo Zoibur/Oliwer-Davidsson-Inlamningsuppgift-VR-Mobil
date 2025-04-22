@@ -13,9 +13,10 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
+  - _EMISSION
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -24,12 +25,12 @@ Material:
   disabledShaderPasses:
   - SHADOWCASTER
   - DepthOnly
-  m_LockedProperties: 
+  m_LockedProperties: _BaseColor _BaseMap
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 893940249406249489a849da81abceca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -148,9 +149,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.1957547, g: 0.26602927, b: 0.5, a: 0.21176471}
+    - _BaseColor: {r: 0, g: 0.23684216, b: 1, a: 0}
     - _Color: {r: 0.18867919, g: 0.18867919, b: 0.18867919, a: 0.50980395}
-    - _EmissionColor: {r: 0.085172676, g: 0.09809424, b: 0.20754719, a: 1}
+    - _EmissionColor: {r: 0.20518868, g: 0.26847115, b: 0.8207547, a: 1}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _FaceText_ST: {r: 1, g: 1, b: 0, a: 0}
     - _FaceUVSpeed: {r: 0, g: 0, b: 0, a: 0}
