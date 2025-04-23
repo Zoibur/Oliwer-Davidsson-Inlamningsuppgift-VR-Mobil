@@ -1,0 +1,10 @@
+# ninja log v5
+0	2345	7671195355295854	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	8c510fdbde880f13
+59	2363	7671195355642886	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	8c87393ff0a5d3d
+52	2378	7671195356065238	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	1d470e1dcfbaace4
+32	2441	7671195356401455	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	e91406e3e62edf94
+14	2463	7671195356862387	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	946694930179c524
+24	2481	7671195357012902	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	444bcd84d402cd7e
+43	2704	7671195359418562	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	acd2c9d6f8066a1d
+7	2816	7671195360433613	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	a6da7de4e259f157
+2816	2994	7671195362338996	D:/Github/VR-OptemeringCasino/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/d6c3g1h3/obj/arm64-v8a/libgame.so	f9a5e86f21021d03
